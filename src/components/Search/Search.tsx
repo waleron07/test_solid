@@ -25,7 +25,6 @@ export const Search = (props: ChildProps) => {
   };
 
   const handlerSortListCity = () => {
-    window.s_state.remove_item('вла');
     setButtonUp(!buttonUp());
     setListCity(sortCallback(buttonUp(), listCity()));
   };
