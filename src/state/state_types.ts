@@ -1,4 +1,10 @@
-import { SetStoreFunction } from "solid-js/store";
+import { SetStoreFunction } from 'solid-js/store';
+
+declare global {
+  interface Window {
+    s_state: any;
+  }
+}
 
 export type TStore = {
   list: TItems;
