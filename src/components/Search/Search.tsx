@@ -4,7 +4,12 @@ import { BsSortDown } from 'solid-icons/bs';
 import { TItems, TItem } from '../../state/state_types';
 import styles from './Search.module.scss';
 
-export const Search = ({ items }: { items: TItems }) => {
+type ChildProps = {
+  items: TItems;
+};
+
+export const Search = (props: ChildProps) => {
+  const items = () => props.items;
   const [buttonUp, setButtonUp] = createSignal<boolean>(true);
   const [listCity, setListCity] = createSignal<TItems>([]);
   const [searchValue, setSearchValue] = createSignal<string>('');
@@ -20,20 +25,21 @@ export const Search = ({ items }: { items: TItems }) => {
   };
 
   const handlerSortListCity = () => {
+    window.s_state.remove_item('вла');
     setButtonUp(!buttonUp());
     setListCity(sortCallback(buttonUp(), listCity()));
   };
 
   const handlerUpdateSearchValue = (val: string) => {
     const target = val.toLowerCase();
-    const newListCity = updateListCity(items, target);
+    const newListCity = updateListCity(items(), target);
     setSearchValue(target);
     setListCity(newListCity);
   };
   createEffect(() => {
-    const newListCity = updateListCity(items);
+    const newListCity = updateListCity(items());
     setListCity(newListCity);
-  }, [items]);
+  }, [items()]);
 
   return (
     <div class={styles.container_search}>
